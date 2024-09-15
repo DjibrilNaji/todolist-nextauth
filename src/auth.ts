@@ -12,5 +12,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: routes.auth.login(),
     error: routes.auth.error()
   },
+  events: {
+    async linkAccount({ user }) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          emailVerified: new Date()
+        }
+      })
+    }
+  },
   ...authConfig
 })
