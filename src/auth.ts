@@ -1,9 +1,9 @@
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import NextAuth from "next-auth"
 
+import authConfig from "@/auth.config"
 import { prisma } from "@/lib/prisma"
 import routes from "@/web/routes"
-import authConfig from "./auth.config"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),

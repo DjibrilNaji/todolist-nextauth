@@ -1,8 +1,13 @@
 "use client"
-import { Button } from "@/web/components/ui/button"
+
 import { signOut } from "next-auth/react"
 
-export default function Home() {
+import { auth } from "@/auth"
+import { Button } from "@/web/components/ui/button"
+
+export default async function Home() {
+  const session = await auth()
+
   return (
     <div>
       <Button onClick={() => signOut()}>Se déconnecter</Button>

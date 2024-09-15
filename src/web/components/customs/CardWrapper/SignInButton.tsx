@@ -1,8 +1,8 @@
 import { signIn } from "next-auth/react"
+import React from "react"
 
 import { Button } from "@/web/components/ui/button"
 import { DEFAULT_LOGIN_REDIRECT } from "@/web/routes"
-import React from "react"
 
 interface SignInButtonProps {
   provider: string
