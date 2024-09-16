@@ -10,7 +10,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validateFields = RegisterSchema.safeParse(values)
 
   if (!validateFields.success) {
-    return { error: "Invalid fields !" }
+    throw new Error("Invalid fields !")
   }
 
   const { name, email, password } = validateFields.data
@@ -18,7 +18,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const existingUser = await getUserByEmail(email)
 
   if (existingUser) {
-    return { error: "Email already exists !" }
+    throw new Error("Email already exists !")
   }
 
   await prisma.user.create({

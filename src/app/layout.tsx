@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 
+import TanstackProvider from "@/providers/TanstackProvider"
+import { Toaster } from "sonner"
 import "./globals.css"
 
 const geistSans = localFont({
@@ -29,7 +31,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-500 h-full flex items-center justify-center`}
       >
-        {children}
+        <TanstackProvider>
+          {children}
+          <Toaster position="bottom-right" richColors />
+        </TanstackProvider>
       </body>
     </html>
   )

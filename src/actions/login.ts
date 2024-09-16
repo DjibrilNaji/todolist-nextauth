@@ -22,14 +22,15 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT
     })
+    throw new Error("Something went wrong!")
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return { error: "Invalid credentials !" }
+          throw new Error("Invalid credentials !")
 
         default:
-          return { error: "Something went wrong!" }
+          throw new Error("Something went wrong!")
       }
     }
 
