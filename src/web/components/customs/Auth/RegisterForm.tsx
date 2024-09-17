@@ -48,7 +48,7 @@ export default function RegisterForm() {
     <CardWrapper
       headerLabel="Create an account"
       backButtonLabel="Already have an account ?"
-      backButtonHref={routes.auth.login()}
+      backButtonHref={routes.auth.login}
       showSocial
     >
       <Form {...form}>

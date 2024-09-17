@@ -7,7 +7,7 @@ export default async function ErrorCard() {
   return (
     <CardWrapper
       headerLabel="Oops! Something went wrong!"
-      backButtonHref={routes.auth.login()}
+      backButtonHref={routes.auth.login}
       backButtonLabel="Back to login"
     >
       <div className="w-full flex justify-center items-center">

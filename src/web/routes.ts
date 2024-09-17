@@ -7,11 +7,11 @@ export const apiAuthPrefix = "/api/auth"
 export const DEFAULT_LOGIN_REDIRECT = "/"
 
 const routes = {
-  home: () => "/",
+  home: "/",
   auth: {
-    login: () => "/auth/login",
-    register: () => "/auth/register",
-    error: () => "/auth/error"
+    login: "/auth/login",
+    register: "/auth/register",
+    error: "/auth/error"
   }
 }
 
