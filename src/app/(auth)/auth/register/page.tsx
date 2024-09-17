@@ -2,6 +2,6 @@
 
 import RegisterForm from "@/web/components/customs/Auth/RegisterForm"
 
-export default async function Login() {
+export default function Login() {
   return <RegisterForm />
 }

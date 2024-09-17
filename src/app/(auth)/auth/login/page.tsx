@@ -2,6 +2,6 @@
 
 import LoginForm from "@/web/components/customs/Auth/LoginForm"
 
-export default async function Login() {
+export default function Login() {
   return <LoginForm />
 }
