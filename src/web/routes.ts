@@ -6,6 +6,7 @@ export const DEFAULT_LOGIN_REDIRECT = "/"
 
 const routes = {
   home: "/",
+  settings: "/settings",
   auth: {
     login: "/auth/login",
     register: "/auth/register",

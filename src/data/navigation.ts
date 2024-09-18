@@ -1,9 +1,16 @@
-import { Settings } from "lucide-react"
+import { ClipboardList, Settings } from "lucide-react"
+
+import routes from "@/web/routes"
 
 export const navigationItems = [
   {
+    title: "Tasks List",
+    href: routes.home,
+    icon: ClipboardList
+  },
+  {
     title: "Settings",
-    href: "/settings",
+    href: routes.settings,
     icon: Settings
   }
 ]

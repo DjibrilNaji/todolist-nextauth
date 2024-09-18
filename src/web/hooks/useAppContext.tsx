@@ -5,8 +5,8 @@ import React, { createContext, useContext } from "react"
 
 interface AppContextType {
   ownerId?: string
-  userImage?: string | null
-  userName?: string | null
+  userImage?: string | null | undefined
+  userName?: string | null | undefined
 }
 
 export function AppContextProvider(props: { session: Session | null; children: React.ReactNode }) {

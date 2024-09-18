@@ -1,14 +1,20 @@
 "use client"
 
-import { ClipboardList, Menu } from "lucide-react"
+import { Menu, User } from "lucide-react"
+import { signOut } from "next-auth/react"
 
 import { navigationItems } from "@/data/navigation"
+import NavLink from "@/web/components/customs/Layout/NavLink"
+import { Avatar, AvatarFallback, AvatarImage } from "@/web/components/ui/avatar"
 import { Button } from "@/web/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet"
-import { signOut } from "next-auth/react"
-import NavLink from "./NavLink"
 
-export default function BurgerMenu() {
+interface BurgerMenuProps {
+  userImage: string | null | undefined
+  userName: string | null | undefined
+}
+
+export default function BurgerMenu({ userImage, userName }: BurgerMenuProps) {
   return (
     <div className="flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6 sticky top-0 bg-white z-50">
       <Sheet>
@@ -19,8 +25,19 @@ export default function BurgerMenu() {
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col">
           <nav className="h-full flex flex-col justify-between">
-            <div className="grid gap-2 text-lg font-medium">
-              <ClipboardList className="h-6 w-6" />
+            <div className="grid gap-4 text-lg font-medium">
+              <div className="flex items-center gap-4">
+                <Avatar className="h-6 w-6">
+                  <AvatarImage src={userImage || ""} />
+                  <AvatarFallback>
+                    <User />
+                  </AvatarFallback>
+                </Avatar>
+                <p className="truncate" title={userName || ""}>
+                  {userName}
+                </p>
+              </div>
+
               {navigationItems.map((item, index) => (
                 <NavLink
                   key={index}

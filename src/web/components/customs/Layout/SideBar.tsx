@@ -3,13 +3,15 @@ import { signOut } from "next-auth/react"
 
 import { navigationItems } from "@/data/navigation"
 import { Button } from "@/web/components/ui/button"
-import useAppContext from "@/web/hooks/useAppContext"
 import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar"
 import NavLink from "./NavLink"
 
-export default function SideBar() {
-  const { userImage, userName } = useAppContext()
+interface SideBarProps {
+  userImage: string | null | undefined
+  userName: string | null | undefined
+}
 
+export default function SideBar({ userImage, userName }: SideBarProps) {
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2 sticky top-0">
