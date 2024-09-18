@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(
   req: NextRequest,
-  { params: { userId } }: { params: { userId: string } }
+  { params: { userId, slug } }: { params: { userId: string; slug: string } }
 ) {
   try {
     const user = await prisma.user.findUnique({
@@ -15,10 +15,14 @@ export async function GET(
       return NextResponse.json("User not found", { status: 404 })
     }
 
-    const tasksList = await prisma.taskList.findMany({
-      where: { ownerId: userId },
+    const tasksList = await prisma.taskList.findUnique({
+      where: { slug },
       include: { Task: true }
     })
+
+    if (!tasksList) {
+      return NextResponse.json("Tasks list not found", { status: 404 })
+    }
 
     return NextResponse.json(tasksList, { status: 200 })
   } catch (error: unknown) {

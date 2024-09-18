@@ -46,9 +46,9 @@ model Account {
 
 model TaskList {
   id          String  @id @default(cuid())
+  slug        String  @unique
   name        String
   description String?
-  slug        String
   ownerId     String
 
   owner User @relation(fields: [ownerId], references: [id])

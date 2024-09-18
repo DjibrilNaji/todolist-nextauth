@@ -1,28 +1,14 @@
 "use client"
 
-import { Button } from "@/web/components/ui/button"
-import { MoveLeft } from "lucide-react"
-import { usePathname, useRouter } from "next/navigation"
+import Tasks from "@/web/components/customs/TasksList/Tasks"
+import useAppContext from "@/web/hooks/useAppContext"
 
 export default function TasksList() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [, , tasksListSlug] = pathname.split("/")
+  const { userId } = useAppContext()
 
-  return (
-    <div className="p-4">
-      <Button
-        variant="link"
-        size="fit"
-        className="flex gap-2 mb-5"
-        onClick={() => {
-          router.back()
-        }}
-      >
-        <MoveLeft className="h-5 w-5" />
-        Back
-      </Button>
-      List {tasksListSlug}
-    </div>
-  )
+  if (!userId) {
+    return null
+  }
+
+  return <Tasks userId={userId} />
 }

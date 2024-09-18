@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-import EmptyList from "@/web/components/customs/TasksList/EmptyList"
+import EmptyTasksList from "@/web/components/customs/TasksList/EmptyTasksList"
 import { Error } from "@/web/components/customs/Utils/Error"
 import { Spinner } from "@/web/components/customs/Utils/Spinner"
 import { Button } from "@/web/components/ui/button"
@@ -10,11 +10,11 @@ import { Progress } from "@/web/components/ui/progress"
 import routes from "@/web/routes"
 import { useGetTasksList } from "@/web/service/tasks"
 
-interface TodoListProps {
+interface TasksListProps {
   userId: string
 }
 
-export function TodoList({ userId }: TodoListProps) {
+export function TasksList({ userId }: TasksListProps) {
   const { data, isPending, error } = useGetTasksList(userId)
 
   if (isPending) {
@@ -64,7 +64,7 @@ export function TodoList({ userId }: TodoListProps) {
           ))}
         </div>
       ) : (
-        <EmptyList />
+        <EmptyTasksList />
       )}
     </div>
   )

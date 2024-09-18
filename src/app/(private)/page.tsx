@@ -1,6 +1,6 @@
 "use client"
 
-import { TodoList } from "@/web/components/customs/TasksList/TodoList"
+import { TasksList } from "@/web/components/customs/TasksList/TasksList"
 import useAppContext from "@/web/hooks/useAppContext"
 
 export default function Home() {
@@ -10,5 +10,5 @@ export default function Home() {
     return null
   }
 
-  return <TodoList userId={userId} />
+  return <TasksList userId={userId} />
 }

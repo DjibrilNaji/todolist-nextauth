@@ -17,7 +17,8 @@ const routes = {
   },
   api: {
     user: {
-      tasksList: (userId: string) => `/api/user/${userId}/tasksList`
+      tasksList: (userId: string) => `/api/user/${userId}/tasksList`,
+      tasksListBySlug: (userId: string, slug: string) => `/api/user/${userId}/tasksList/${slug}`
     }
   }
 }
