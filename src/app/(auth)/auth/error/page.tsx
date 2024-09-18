@@ -2,6 +2,6 @@
 
 import ErrorCard from "@/web/components/customs/Auth/ErrorCard"
 
-export default async function Error() {
+export default function Error() {
   return <ErrorCard />
 }

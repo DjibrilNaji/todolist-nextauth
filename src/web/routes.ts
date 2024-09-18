@@ -1,5 +1,3 @@
-export const publicRoutes = [""]
-
 export const authRoutes = ["/auth/login", "/auth/register", "/auth/error"]
 
 export const apiAuthPrefix = "/api/auth"
@@ -12,6 +10,14 @@ const routes = {
     login: "/auth/login",
     register: "/auth/register",
     error: "/auth/error"
+  },
+  tasks: {
+    tasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}`
+  },
+  api: {
+    tasks: {
+      tasksList: (ownerId: string) => `/api/tasks/${ownerId}`
+    }
   }
 }
 

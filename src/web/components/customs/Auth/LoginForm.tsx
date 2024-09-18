@@ -6,19 +6,12 @@ import { z } from "zod"
 
 import { LoginSchema } from "@/schemas"
 import { LoginType } from "@/types/formTypes"
+import CustomFormField from "@/web/components/customs/Auth/CustomFormField"
 import FormError from "@/web/components/customs/Auth/FormError"
 import FormSuccess from "@/web/components/customs/Auth/FormSuccess"
 import CardWrapper from "@/web/components/customs/CardWrapper/CardWrapper"
 import { Button } from "@/web/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/web/components/ui/form"
-import { Input } from "@/web/components/ui/input"
+import { Form } from "@/web/components/ui/form"
 import routes from "@/web/routes"
 import { useLogin } from "@/web/service/auth/login"
 
@@ -30,7 +23,6 @@ export default function LoginForm() {
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "Email already in use with different provider"
       : ""
-
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -38,15 +30,13 @@ export default function LoginForm() {
       password: ""
     }
   })
-
   const { mutate, isPending } = useLogin()
-
   const handleSubmit = (values: LoginType) => {
     setError("")
     setSuccess("")
     mutate(values, {
-      onError: (error) => {
-        setError(error.message)
+      onError: (err) => {
+        setError(err.message)
       }
     })
   }
@@ -61,37 +51,20 @@ export default function LoginForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="space-y-4">
-            <FormField
-              control={form.control}
+            <CustomFormField<LoginType>
+              form={form}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="john@gmail.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Email"
+              isPending={isPending}
+              placeholder="john@gmail.com"
             />
-
-            <FormField
-              control={form.control}
+            <CustomFormField<LoginType>
+              form={form}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled={isPending} placeholder="******" type="password" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Password"
+              isPending={isPending}
+              placeholder="******"
+              type="password"
             />
           </div>
 

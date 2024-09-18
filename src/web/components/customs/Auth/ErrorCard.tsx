@@ -3,7 +3,7 @@ import { FaExclamationTriangle } from "react-icons/fa"
 import CardWrapper from "@/web/components/customs/CardWrapper/CardWrapper"
 import routes from "@/web/routes"
 
-export default async function ErrorCard() {
+export default function ErrorCard() {
   return (
     <CardWrapper
       headerLabel="Oops! Something went wrong!"

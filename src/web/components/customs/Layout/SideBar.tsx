@@ -1,7 +1,6 @@
 import { ClipboardList } from "lucide-react"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 import { navigationItems } from "@/data/navigation"
 import { Button } from "@/web/components/ui/button"
@@ -9,12 +8,10 @@ import routes from "@/web/routes"
 import NavLink from "./NavLink"
 
 export default function SideBar() {
-  const pathname = usePathname()
-
   return (
     <div className="hidden border-r bg-muted/40 md:block">
-      <div className="flex h-full max-h-screen flex-col gap-2">
-        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+      <div className="flex h-full max-h-screen flex-col gap-2 sticky top-0">
+        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 sticky top-0">
           <Link href={routes.home} className="flex items-center gap-2 font-semibold">
             <ClipboardList className="h-6 w-6" />
             TODOLIST

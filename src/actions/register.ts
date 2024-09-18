@@ -14,7 +14,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   const { name, email, password } = validateFields.data
-
   const existingUser = await getUserByEmail(email)
 
   if (existingUser) {

@@ -1,3 +1,5 @@
+import React from "react"
+
 import BackButton from "@/web/components/customs/CardWrapper/BackButton"
 import Header from "@/web/components/customs/CardWrapper/Header"
 import Social from "@/web/components/customs/CardWrapper/Social"

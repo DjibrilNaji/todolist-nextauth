@@ -16,10 +16,11 @@ export default {
 
         if (validateFields.success) {
           const { email } = validateFields.data
-
           const user = await getUserByEmail(email)
 
-          if (!user || !user.password) return null
+          if (!user || !user.password) {
+            return null
+          }
 
           return user
         }

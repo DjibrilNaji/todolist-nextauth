@@ -5,24 +5,18 @@ import { z } from "zod"
 
 import { RegisterSchema } from "@/schemas"
 import { RegisterType } from "@/types/formTypes"
+import CustomFormField from "@/web/components/customs/Auth/CustomFormField"
+import FormError from "@/web/components/customs/Auth/FormError"
+import FormSuccess from "@/web/components/customs/Auth/FormSuccess"
 import CardWrapper from "@/web/components/customs/CardWrapper/CardWrapper"
 import { Button } from "@/web/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from "@/web/components/ui/form"
-import { Input } from "@/web/components/ui/input"
+import { Form } from "@/web/components/ui/form"
 import routes from "@/web/routes"
 import { useRegister } from "@/web/service/auth/register"
 
 export default function RegisterForm() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
-
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
@@ -31,15 +25,13 @@ export default function RegisterForm() {
       password: ""
     }
   })
-
   const { mutate, isPending } = useRegister()
-
   const handleSubmit = (values: RegisterType) => {
     setError("")
     setSuccess("")
     mutate(values, {
-      onError: (error) => {
-        setError(error.message)
+      onError: (err) => {
+        setError(err.message)
       }
     })
   }
@@ -54,51 +46,32 @@ export default function RegisterForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="space-y-4">
-            <FormField
-              control={form.control}
+            <CustomFormField<RegisterType>
+              form={form}
               name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled={isPending} placeholder="John Doe" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Name"
+              isPending={isPending}
+              placeholder="John Doe"
             />
-            <FormField
-              control={form.control}
+            <CustomFormField<RegisterType>
+              form={form}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="john@gmail.com"
-                      type="email"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Email"
+              isPending={isPending}
+              placeholder="john@gmail.com"
             />
-            <FormField
-              control={form.control}
+            <CustomFormField<RegisterType>
+              form={form}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled={isPending} placeholder="******" type="password" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="Password"
+              isPending={isPending}
+              placeholder="******"
+              type="password"
             />
           </div>
+
+          <FormError message={error} />
+          <FormSuccess message={success} />
 
           <Button type="submit" className="w-full">
             Register

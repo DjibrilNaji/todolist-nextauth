@@ -8,13 +8,15 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String    @unique
+  email         String     @unique
   emailVerified DateTime?
   image         String?
   password      String?
   accounts      Account[]
+  Task          Task[]
+  TaskList      TaskList[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -40,4 +42,34 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model TaskList {
+  id          String  @id @default(cuid())
+  name        String
+  description String?
+  slug        String
+  ownerId     String
+
+  owner User @relation(fields: [ownerId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Task      Task[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  userId      String
+  taskListId  String
+  done        Boolean   @default(false)
+
+  user     User     @relation(fields: [userId], references: [id])
+  taskList TaskList @relation(fields: [taskListId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

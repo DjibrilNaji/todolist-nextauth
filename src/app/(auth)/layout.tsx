@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import localFont from "next/font/local"
+import React from "react"
 import { Toaster } from "sonner"
 
 import TanstackProvider from "@/providers/TanstackProvider"
@@ -26,6 +27,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full flex items-center justify-center`}
+        suppressHydrationWarning
       >
         <TanstackProvider>
           {children}
