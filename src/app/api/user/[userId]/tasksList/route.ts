@@ -4,11 +4,11 @@ import { prisma } from "@/lib/prisma"
 
 export async function GET(
   req: NextRequest,
-  { params: { ownerId } }: { params: { ownerId: string } }
+  { params: { userId } }: { params: { userId: string } }
 ) {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: ownerId }
+      where: { id: userId }
     })
 
     if (!user) {
@@ -16,7 +16,7 @@ export async function GET(
     }
 
     const tasks = await prisma.taskList.findMany({
-      where: { ownerId },
+      where: { ownerId: userId },
       include: { Task: true }
     })
 

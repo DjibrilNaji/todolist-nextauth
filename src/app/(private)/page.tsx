@@ -4,11 +4,11 @@ import { TodoList } from "@/web/components/customs/TasksList/TodoList"
 import useAppContext from "@/web/hooks/useAppContext"
 
 export default function Home() {
-  const { ownerId } = useAppContext()
+  const { userId } = useAppContext()
 
-  if (!ownerId) {
+  if (!userId) {
     return null
   }
 
-  return <TodoList ownerId={ownerId} />
+  return <TodoList userId={userId} />
 }

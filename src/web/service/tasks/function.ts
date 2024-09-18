@@ -3,9 +3,9 @@ import axios, { AxiosError } from "axios"
 import { TaskList } from "@/types/task"
 import routes from "@/web/routes"
 
-export const getTasksList = async (ownerId: string) => {
+export const getTasksList = async (userId: string) => {
   try {
-    const { data }: { data: TaskList[] } = await axios.get(routes.api.tasks.tasksList(ownerId))
+    const { data }: { data: TaskList[] } = await axios.get(routes.api.user.tasksList(userId))
 
     return data
   } catch (err: unknown) {

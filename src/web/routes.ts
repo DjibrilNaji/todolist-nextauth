@@ -16,8 +16,8 @@ const routes = {
     tasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}`
   },
   api: {
-    tasks: {
-      tasksList: (ownerId: string) => `/api/tasks/${ownerId}`
+    user: {
+      tasksList: (userId: string) => `/api/user/${userId}/tasksList`
     }
   }
 }

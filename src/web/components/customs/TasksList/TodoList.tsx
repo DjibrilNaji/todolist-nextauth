@@ -11,11 +11,11 @@ import routes from "@/web/routes"
 import { useGetTasksList } from "@/web/service/tasks"
 
 interface TodoListProps {
-  ownerId: string
+  userId: string
 }
 
-export function TodoList({ ownerId }: TodoListProps) {
-  const { data, isPending, error } = useGetTasksList(ownerId)
+export function TodoList({ userId }: TodoListProps) {
+  const { data, isPending, error } = useGetTasksList(userId)
 
   if (isPending) {
     return <Spinner />

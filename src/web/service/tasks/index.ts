@@ -2,10 +2,10 @@ import { useQuery } from "@tanstack/react-query"
 
 import { getTasksList } from "@/web/service/tasks/function"
 
-export const useGetTasksList = (ownerId: string) => {
+export const useGetTasksList = (userId: string) => {
   const { data, isPending, error } = useQuery({
-    queryKey: ["tasksList", ownerId],
-    queryFn: () => getTasksList(ownerId)
+    queryKey: ["tasksList", userId],
+    queryFn: () => getTasksList(userId)
   })
 
   return {

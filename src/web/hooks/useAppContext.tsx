@@ -4,13 +4,13 @@ import { Session } from "next-auth"
 import React, { createContext, useContext } from "react"
 
 interface AppContextType {
-  ownerId?: string
+  userId?: string
   userImage?: string | null | undefined
   userName?: string | null | undefined
 }
 
 export function AppContextProvider(props: { session: Session | null; children: React.ReactNode }) {
-  const ownerId = props.session?.user?.id
+  const userId = props.session?.user?.id
   const userImage = props.session?.user?.image
   const userName = props.session?.user?.name
 
@@ -18,7 +18,7 @@ export function AppContextProvider(props: { session: Session | null; children: R
     <AppContext.Provider
       {...props}
       value={{
-        ownerId,
+        userId,
         userImage,
         userName
       }}
