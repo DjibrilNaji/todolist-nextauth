@@ -50,7 +50,7 @@ export function TodoList({ ownerId }: TodoListProps) {
               </div>
 
               <p
-                className={`truncate ${taskList.description ? "text-sm italic text-muted-foreground" : ""}`}
+                className={`truncate ${taskList.description ? "" : "text-sm italic text-muted-foreground"}`}
               >
                 {taskList.description ? taskList.description : "No description"}
               </p>
