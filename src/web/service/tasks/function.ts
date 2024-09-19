@@ -42,3 +42,24 @@ export const getTasksListBySlug = async (userId: string, slug: string) => {
     throw new Error("serverError")
   }
 }
+
+export const updateTaskById = async (taskId: string, { done }: { done?: boolean }) => {
+  try {
+    const { data }: { data: boolean } = await axios.patch(routes.api.tasks.updateTask(taskId), {
+      done
+    })
+
+    return data
+  } catch (err: unknown) {
+    if (err instanceof AxiosError && err.response?.data) {
+      const errorMessage =
+        typeof err.response.statusText === "string"
+          ? err.response.statusText
+          : JSON.stringify(err.response.statusText)
+
+      throw new Error(errorMessage)
+    }
+
+    throw new Error("serverError")
+  }
+}

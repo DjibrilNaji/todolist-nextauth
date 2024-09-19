@@ -1,6 +1,6 @@
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
-import { getTasksList, getTasksListBySlug } from "@/web/service/tasks/function"
+import { getTasksList, getTasksListBySlug, updateTaskById } from "@/web/service/tasks/function"
 
 export const useGetTasksList = (userId: string) => {
   const { data, isPending, error } = useQuery({
@@ -26,4 +26,17 @@ export const useGetTasksListBySlug = (userId: string, slug: string) => {
     isPending,
     error
   }
+}
+
+export const useUpdateTaskById = () => {
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({ taskId, done }: { taskId: string; done: boolean }) =>
+      await updateTaskById(taskId, { done }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
+    }
+  })
+
+  return { mutate, isPending }
 }

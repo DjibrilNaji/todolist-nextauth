@@ -17,7 +17,13 @@ export async function GET(
 
     const tasksList = await prisma.taskList.findUnique({
       where: { slug },
-      include: { Task: true }
+      include: {
+        Task: {
+          orderBy: {
+            id: "asc"
+          }
+        }
+      }
     })
 
     if (!tasksList) {
