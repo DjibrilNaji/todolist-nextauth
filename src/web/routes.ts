@@ -25,6 +25,7 @@ const routes = {
       updateTask: (taskId: string) => `/api/tasks/${taskId}`,
       deleteTask: (taskId: string) => `/api/tasks/${taskId}`,
       updateTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`,
+      deleteTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`,
       createTask: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`
     }
   }

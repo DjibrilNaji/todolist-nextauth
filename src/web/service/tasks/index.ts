@@ -5,6 +5,7 @@ import { toast } from "sonner"
 import {
   createTask,
   deleteTaskById,
+  deleteTasksListBySlug,
   getTasksList,
   getTasksListBySlug,
   updateTaskById,
@@ -101,6 +102,21 @@ export const useDeleteTaskById = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
       toast.success("Task deleted successfully")
+    }
+  })
+
+  return { mutate, isPending }
+}
+
+export const useDeleteTasksListBySlug = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (tasksListSlug: string) => await deleteTasksListBySlug(tasksListSlug),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
+      toast.success("Tasks list deleted successfully")
+      router.back()
     }
   })
 

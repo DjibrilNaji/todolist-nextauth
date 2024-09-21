@@ -132,3 +132,24 @@ export const deleteTaskById = async (taskId: string) => {
     throw new Error("serverError")
   }
 }
+
+export const deleteTasksListBySlug = async (tasksListSlug: string) => {
+  try {
+    const { data }: { data: boolean } = await axios.delete(
+      routes.api.tasks.deleteTasksList(tasksListSlug)
+    )
+
+    return data
+  } catch (err: unknown) {
+    if (err instanceof AxiosError && err.response?.data) {
+      const errorMessage =
+        typeof err.response.statusText === "string"
+          ? err.response.statusText
+          : JSON.stringify(err.response.statusText)
+
+      throw new Error(errorMessage)
+    }
+
+    throw new Error("serverError")
+  }
+}

@@ -1,7 +1,13 @@
 import { NextRequest, NextResponse } from "next/server"
 import { z } from "zod"
 
-import { createTask, getUniqueTasksListBySlug, updateTasksListBySlug } from "@/data/tasks"
+import {
+  createTask,
+  deleteTaskByTasksListSlug,
+  deleteTasksList,
+  getUniqueTasksListBySlug,
+  updateTasksListBySlug
+} from "@/data/tasks"
 import { stringValidator } from "@/validators"
 
 export async function PATCH(
@@ -80,4 +86,35 @@ export async function POST(
   }
 
   return NextResponse.json({ result: true })
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params: { tasksListSlug } }: { params: { tasksListSlug: string } }
+) {
+  try {
+    if (!tasksListSlug) {
+      return NextResponse.json({ error: "Invalid Argument" }, { status: 422 })
+    }
+
+    const tasksList = await getUniqueTasksListBySlug(tasksListSlug)
+
+    if (!tasksList) {
+      return NextResponse.json({ error: "Tasks list not found" }, { status: 404 })
+    }
+
+    await deleteTaskByTasksListSlug(tasksList.id)
+    await deleteTasksList(tasksListSlug)
+
+    return NextResponse.json(
+      { message: "Tasks list successfully deleted", status: 200 },
+      { status: 200 }
+    )
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: { message: error.message } }, { status: 500 })
+    }
+
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
+  }
 }

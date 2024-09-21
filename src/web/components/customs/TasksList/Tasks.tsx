@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { useState } from "react"
 
 import { DeleteTaskDialog } from "@/web/components/customs/TasksList/DeleteTaskDialog"
+import { DeleteTasksListDialog } from "@/web/components/customs/TasksList/DeleteTasksListDialog"
 import EmptyTasks from "@/web/components/customs/TasksList/EmptyTasks"
 import TaskItem from "@/web/components/customs/TasksList/TaskItem"
 import { BackButton } from "@/web/components/customs/Utils/BackButton"
@@ -46,9 +47,12 @@ export default function Tasks({ userId }: TasksProps) {
 
       <h1 className="text-lg font-semibold flex items-center justify-between">
         {data?.name}
-        <Link href={routes.tasks.updateTasksList(tasksListSlug)}>
-          <Pencil />
-        </Link>
+        <div className="flex gap-5">
+          <Link href={routes.tasks.updateTasksList(tasksListSlug)}>
+            <Pencil />
+          </Link>
+          <DeleteTasksListDialog tasksListSlug={tasksListSlug} />
+        </div>
       </h1>
 
       <div className="flex gap-4 py-8">
