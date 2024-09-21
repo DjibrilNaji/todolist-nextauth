@@ -6,7 +6,6 @@ import { Toaster } from "sonner"
 import { auth } from "@/auth"
 import TanstackProvider from "@/providers/TanstackProvider"
 import Layout from "@/web/components/customs/Layout/Layout"
-import { ThemeProvider } from "@/web/components/theme-provider"
 import { AppContextProvider } from "@/web/hooks/useAppContext"
 import "../globals.css"
 
@@ -39,21 +38,14 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} h-full flex items-center justify-center`}
         suppressHydrationWarning
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <AppContextProvider session={session}>
-            <TanstackProvider>
-              <Layout>
-                {children}
-                <Toaster position="bottom-right" richColors />
-              </Layout>
-            </TanstackProvider>
-          </AppContextProvider>
-        </ThemeProvider>
+        <AppContextProvider session={session}>
+          <TanstackProvider>
+            <Layout>
+              {children}
+              <Toaster position="bottom-right" richColors />
+            </Layout>
+          </TanstackProvider>
+        </AppContextProvider>
       </body>
     </html>
   )

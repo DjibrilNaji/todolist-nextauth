@@ -44,7 +44,9 @@ export function TasksList({ userId }: TasksListProps) {
             >
               <div className="flex justify-between md:flex-row gap-2">
                 <h2 className="font-semibold truncate">{taskList.name}</h2>
-                <span className="border rounded px-1 py-0 w-fit">{taskList.Task.length}</span>
+                <span className="border rounded px-1 py-0 w-fit bg-white">
+                  {taskList.Task.length}
+                </span>
               </div>
 
               <p
