@@ -12,6 +12,7 @@ import FormError from "@/web/components/customs/Auth/FormError"
 import { Button } from "@/web/components/ui/button"
 import { Form } from "@/web/components/ui/form"
 import { useUpdateTasksListBySlug } from "@/web/service/tasks"
+import { BackButton } from "../Utils/BackButton"
 
 interface TasksListFormProps {
   tasksList: TaskList | undefined
@@ -54,36 +55,39 @@ export default function TasksListForm({ tasksList }: TasksListFormProps) {
   }, [tasksList, form])
 
   return (
-    <div className="flex flex-col flex-1 justify-center items-center">
-      <div className="text-center mb-4">
-        <h1 className="text-2xl font-bold">Update Tasks List</h1>
+    <div className="flex flex-col flex-1 ">
+      <BackButton className="m-2" />
+      <div className="flex flex-col flex-1 justify-center items-center">
+        <div className="text-center mb-4">
+          <h1 className="text-2xl font-bold">Update Tasks List</h1>
+        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-[400px]">
+            <div className="space-y-4">
+              <CustomFormField<TaskListType>
+                form={form}
+                name="name"
+                label="Name"
+                isPending={isPending}
+                placeholder="My name"
+              />
+              <CustomFormField<TaskListType>
+                form={form}
+                name="description"
+                label="Description"
+                isPending={isPending}
+                placeholder="My description"
+              />
+            </div>
+
+            <FormError message={error} />
+
+            <Button type="submit" className="w-full">
+              Update
+            </Button>
+          </form>
+        </Form>
       </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-[400px]">
-          <div className="space-y-4">
-            <CustomFormField<TaskListType>
-              form={form}
-              name="name"
-              label="Name"
-              isPending={isPending}
-              placeholder="My name"
-            />
-            <CustomFormField<TaskListType>
-              form={form}
-              name="description"
-              label="Description"
-              isPending={isPending}
-              placeholder="My description"
-            />
-          </div>
-
-          <FormError message={error} />
-
-          <Button type="submit" className="w-full">
-            Update
-          </Button>
-        </form>
-      </Form>
     </div>
   )
 }

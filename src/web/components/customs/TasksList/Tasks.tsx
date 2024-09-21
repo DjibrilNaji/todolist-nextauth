@@ -43,7 +43,7 @@ export default function Tasks({ userId }: TasksProps) {
 
   return (
     <div className="p-4 flex flex-col flex-1 h-full">
-      <BackButton />
+      <BackButton className="mb-5" />
 
       <h1 className="text-lg font-semibold flex items-center justify-between">
         {data?.name}
@@ -70,7 +70,7 @@ export default function Tasks({ userId }: TasksProps) {
       {data?.Task && data.Task.length > 0 ? (
         <div className="flex flex-col gap-4">
           {data.Task.map((task, index) => (
-            <div className="flex items-center gap-4 mx-2">
+            <div className="flex items-center gap-4 mr-2">
               <TaskItem key={index} task={task} />
               <DeleteTaskDialog taskId={task.id} />
             </div>
