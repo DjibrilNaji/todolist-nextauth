@@ -41,9 +41,11 @@ export function DeleteTaskDialog({ taskId }: DeleteTaskDialogProps) {
           <DialogClose asChild>
             <Button type="submit">Cancel</Button>
           </DialogClose>
-          <Button variant="destructive" onClick={handleDeleteTask}>
-            Delete task
-          </Button>
+          <DialogClose asChild>
+            <Button variant="destructive" onClick={handleDeleteTask}>
+              Delete task
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>
