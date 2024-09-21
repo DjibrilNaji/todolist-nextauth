@@ -2,9 +2,11 @@
 
 import { Menu, User } from "lucide-react"
 import { signOut } from "next-auth/react"
+import { useTheme } from "next-themes"
 
 import { navigationItems } from "@/data/navigation"
 import NavLink from "@/web/components/customs/Layout/NavLink"
+import { ModeToggle } from "@/web/components/customs/Utils/ModeToggle"
 import { Avatar, AvatarFallback, AvatarImage } from "@/web/components/ui/avatar"
 import { Button } from "@/web/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/web/components/ui/sheet"
@@ -15,8 +17,12 @@ interface BurgerMenuProps {
 }
 
 export default function BurgerMenu({ userImage, userName }: BurgerMenuProps) {
+  const { theme } = useTheme()
+
   return (
-    <div className="flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6 sticky top-0 bg-white z-50">
+    <div
+      className={`flex h-14 items-center gap-4 border-b px-4 lg:h-[60px] lg:px-6 sticky top-0 z-50 ${theme === "dark" ? "bg-slate-950" : "bg-white"}`}
+    >
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -36,6 +42,8 @@ export default function BurgerMenu({ userImage, userName }: BurgerMenuProps) {
                 <p className="truncate" title={userName || ""}>
                   {userName}
                 </p>
+
+                <ModeToggle />
               </div>
 
               {navigationItems.map((item, index) => (

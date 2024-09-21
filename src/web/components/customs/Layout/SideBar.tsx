@@ -2,9 +2,10 @@ import { User } from "lucide-react"
 import { signOut } from "next-auth/react"
 
 import { navigationItems } from "@/data/navigation"
+import NavLink from "@/web/components/customs/Layout/NavLink"
+import { ModeToggle } from "@/web/components/customs/Utils/ModeToggle"
+import { Avatar, AvatarFallback, AvatarImage } from "@/web/components/ui/avatar"
 import { Button } from "@/web/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "../../ui/avatar"
-import NavLink from "./NavLink"
 
 interface SideBarProps {
   userImage: string | null | undefined
@@ -15,7 +16,7 @@ export default function SideBar({ userImage, userName }: SideBarProps) {
   return (
     <div className="hidden border-r bg-muted/40 md:block">
       <div className="flex h-full max-h-screen flex-col gap-2 sticky top-0">
-        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 sticky top-0">
+        <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 sticky top-0 justify-between">
           <div className="flex items-center gap-2 font-semibold overflow-hidden">
             <Avatar className="h-6 w-6">
               <AvatarImage src={userImage || ""} />
@@ -27,6 +28,8 @@ export default function SideBar({ userImage, userName }: SideBarProps) {
               {userName}
             </p>
           </div>
+
+          <ModeToggle />
         </div>
 
         <div className="flex-1">
