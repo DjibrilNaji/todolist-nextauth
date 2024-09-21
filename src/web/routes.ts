@@ -23,7 +23,8 @@ const routes = {
     },
     tasks: {
       updateTask: (taskId: string) => `/api/tasks/${taskId}`,
-      updateTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`
+      updateTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`,
+      createTask: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`
     }
   }
 }

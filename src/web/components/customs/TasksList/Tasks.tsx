@@ -3,6 +3,7 @@
 import { Pencil } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useState } from "react"
 
 import EmptyTasks from "@/web/components/customs/TasksList/EmptyTasks"
 import TaskItem from "@/web/components/customs/TasksList/TaskItem"
@@ -12,7 +13,7 @@ import { Spinner } from "@/web/components/customs/Utils/Spinner"
 import { Button } from "@/web/components/ui/button"
 import { Input } from "@/web/components/ui/input"
 import routes from "@/web/routes"
-import { useGetTasksListBySlug } from "@/web/service/tasks"
+import { useCreateTask, useGetTasksListBySlug } from "@/web/service/tasks"
 
 interface TasksProps {
   userId: string
@@ -22,6 +23,13 @@ export default function Tasks({ userId }: TasksProps) {
   const pathname = usePathname()
   const [, , tasksListSlug] = pathname.split("/")
   const { data, isPending, error } = useGetTasksListBySlug(userId, tasksListSlug)
+  const [title, setTitle] = useState("")
+
+  const { mutate } = useCreateTask()
+  const handleAddTask = () => {
+    mutate({ title, tasksListSlug })
+    setTitle("")
+  }
 
   if (isPending) {
     return <Spinner />
@@ -43,8 +51,15 @@ export default function Tasks({ userId }: TasksProps) {
       </h1>
 
       <div className="flex gap-4 py-8">
-        <Input placeholder="Add a new task" className="rounded-xl" disabled />
-        <Button disabled>Add task</Button>
+        <Input
+          placeholder="Add a new task"
+          className="rounded-xl"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+        />
+        <Button onClick={handleAddTask} disabled={!title}>
+          Add task
+        </Button>
       </div>
 
       {data?.Task && data.Task.length > 0 ? (

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 
-import { getUniqueTasksListBySlug } from "@/data/tasks"
+import { getUniqueTasksListWithTasksBySlug } from "@/data/tasks"
 import { getUserById } from "@/data/user"
 
 export async function GET(
@@ -14,7 +14,7 @@ export async function GET(
       return NextResponse.json("User not found", { status: 404 })
     }
 
-    const tasksList = await getUniqueTasksListBySlug(slug)
+    const tasksList = await getUniqueTasksListWithTasksBySlug(slug)
 
     return NextResponse.json(tasksList, { status: 200 })
   } catch (error: unknown) {

@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
 import {
+  createTask,
   getTasksList,
   getTasksListBySlug,
   updateTaskById,
@@ -65,6 +66,27 @@ export const useUpdateTasksListBySlug = () => {
       await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
       toast.success("Tasks list updated successfully")
       router.back()
+    }
+  })
+
+  return { mutate, isPending }
+}
+
+export const useCreateTask = () => {
+  const queryClient = useQueryClient()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({
+      tasksListSlug,
+      title,
+      description = ""
+    }: {
+      tasksListSlug: string
+      title: string
+      description?: string
+    }) => await createTask(tasksListSlug, { title, description }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
+      toast.success("Task created successfully")
     }
   })
 

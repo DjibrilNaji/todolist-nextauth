@@ -88,3 +88,28 @@ export const updateTasksListBySlug = async (
     throw new Error("serverError")
   }
 }
+
+export const createTask = async (
+  tasksListSlug: string,
+  { title, description }: { title: string; description: string }
+) => {
+  try {
+    const { data }: { data: boolean } = await axios.post(
+      routes.api.tasks.createTask(tasksListSlug),
+      { title, description }
+    )
+
+    return data
+  } catch (err: unknown) {
+    if (err instanceof AxiosError && err.response?.data) {
+      const errorMessage =
+        typeof err.response.statusText === "string"
+          ? err.response.statusText
+          : JSON.stringify(err.response.statusText)
+
+      throw new Error(errorMessage)
+    }
+
+    throw new Error("serverError")
+  }
+}

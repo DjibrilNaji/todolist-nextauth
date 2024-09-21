@@ -54,7 +54,7 @@ export default function TasksListForm({ tasksList }: TasksListFormProps) {
   }, [tasksList, form])
 
   return (
-    <div className="flex flex-col h-full justify-center items-center">
+    <div className="flex flex-col flex-1 justify-center items-center">
       <div className="text-center mb-4">
         <h1 className="text-2xl font-bold">Update Tasks List</h1>
       </div>

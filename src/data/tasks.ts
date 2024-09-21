@@ -22,7 +22,7 @@ export const getTasksListByOwner = async (ownerId: string) =>
     }
   })
 
-export const getUniqueTasksListBySlug = async (slug: string) =>
+export const getUniqueTasksListWithTasksBySlug = async (slug: string) =>
   await prisma.taskList.findUnique({
     where: { slug },
     include: {
@@ -31,5 +31,25 @@ export const getUniqueTasksListBySlug = async (slug: string) =>
           id: "asc"
         }
       }
+    }
+  })
+
+export const getUniqueTasksListBySlug = async (tasksListSlug: string) =>
+  await prisma.taskList.findUnique({
+    where: { slug: tasksListSlug }
+  })
+
+export const createTask = async (
+  title: string,
+  description: string,
+  userId: string,
+  taskListId: string
+) =>
+  await prisma.task.create({
+    data: {
+      title,
+      description,
+      userId,
+      taskListId
     }
   })
