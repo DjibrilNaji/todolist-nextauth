@@ -53,3 +53,6 @@ export const createTask = async (
       taskListId
     }
   })
+
+export const deleteTask = async (taskId: string) =>
+  await prisma.task.delete({ where: { id: taskId } })

@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState } from "react"
 
+import { DeleteTaskDialog } from "@/web/components/customs/TasksList/DeleteTaskDialog"
 import EmptyTasks from "@/web/components/customs/TasksList/EmptyTasks"
 import TaskItem from "@/web/components/customs/TasksList/TaskItem"
 import { BackButton } from "@/web/components/customs/Utils/BackButton"
@@ -65,7 +66,10 @@ export default function Tasks({ userId }: TasksProps) {
       {data?.Task && data.Task.length > 0 ? (
         <div className="flex flex-col gap-4">
           {data.Task.map((task, index) => (
-            <TaskItem key={index} task={task} />
+            <div className="flex items-center gap-4 mx-2">
+              <TaskItem key={index} task={task} />
+              <DeleteTaskDialog taskId={task.id} />
+            </div>
           ))}
         </div>
       ) : (

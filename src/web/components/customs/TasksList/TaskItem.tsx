@@ -13,7 +13,7 @@ export default function TaskItem({ task }: TaskItemProps) {
   }
 
   return (
-    <div className="border rounded-xl p-2 px-4 flex justify-between items-center">
+    <div className="border rounded-xl p-2 px-4 flex justify-between items-center w-full">
       <h1 className={task.done ? "line-through" : ""}>{task.title}</h1>
       <Checkbox
         checked={task.done}
