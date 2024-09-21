@@ -1,6 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
-import { getTasksList, getTasksListBySlug, updateTaskById } from "@/web/service/tasks/function"
+import {
+  getTasksList,
+  getTasksListBySlug,
+  updateTaskById,
+  updateTasksListBySlug
+} from "@/web/service/tasks/function"
 
 export const useGetTasksList = (userId: string) => {
   const { data, isPending, error } = useQuery({
@@ -35,6 +42,29 @@ export const useUpdateTaskById = () => {
       await updateTaskById(taskId, { done }),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
+    }
+  })
+
+  return { mutate, isPending }
+}
+
+export const useUpdateTasksListBySlug = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({
+      tasksListSlug,
+      name,
+      description
+    }: {
+      tasksListSlug: string
+      name: string
+      description: string
+    }) => await updateTasksListBySlug(tasksListSlug, { name, description }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
+      toast.success("Tasks list updated successfully")
+      router.back()
     }
   })
 

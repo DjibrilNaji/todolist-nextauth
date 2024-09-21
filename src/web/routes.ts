@@ -13,7 +13,8 @@ const routes = {
     error: "/auth/error"
   },
   tasks: {
-    tasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}`
+    tasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}`,
+    updateTasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}/update`
   },
   api: {
     user: {
@@ -21,7 +22,8 @@ const routes = {
       tasksListBySlug: (userId: string, slug: string) => `/api/user/${userId}/tasksList/${slug}`
     },
     tasks: {
-      updateTask: (taskId: string) => `/api/tasks/${taskId}`
+      updateTask: (taskId: string) => `/api/tasks/${taskId}`,
+      updateTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`
     }
   }
 }

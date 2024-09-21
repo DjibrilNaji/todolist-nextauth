@@ -1,5 +1,7 @@
 "use client"
 
+import { Pencil } from "lucide-react"
+import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import EmptyTasks from "@/web/components/customs/TasksList/EmptyTasks"
@@ -9,6 +11,7 @@ import { Error } from "@/web/components/customs/Utils/Error"
 import { Spinner } from "@/web/components/customs/Utils/Spinner"
 import { Button } from "@/web/components/ui/button"
 import { Input } from "@/web/components/ui/input"
+import routes from "@/web/routes"
 import { useGetTasksListBySlug } from "@/web/service/tasks"
 
 interface TasksProps {
@@ -32,7 +35,14 @@ export default function Tasks({ userId }: TasksProps) {
     <div className="p-4 flex flex-col flex-1 h-full">
       <BackButton />
 
-      <div className="flex gap-4 pb-10">
+      <h1 className="text-lg font-semibold flex items-center justify-between">
+        {data?.name}
+        <Link href={routes.tasks.updateTasksList(tasksListSlug)}>
+          <Pencil />
+        </Link>
+      </h1>
+
+      <div className="flex gap-4 py-8">
         <Input placeholder="Add a new task" className="rounded-xl" disabled />
         <Button disabled>Add task</Button>
       </div>
