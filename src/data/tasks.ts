@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma"
+import { NextResponse } from "next/server"
 
 export const updateTaskById = async (taskId: string, { done }: { done?: boolean }) => {
   await prisma.task.update({ where: { id: taskId }, data: { done } })
@@ -6,19 +7,22 @@ export const updateTaskById = async (taskId: string, { done }: { done?: boolean 
 
 export const updateTasksListBySlug = async (
   tasksListSlug: string,
-  { name, description }: { name: string; description: string }
-) =>
+  { name, description, slug }: { name: string; description: string; slug: string }
+) => {
   await prisma.taskList.update({
     where: { slug: tasksListSlug },
-    data: { name, description }
+    data: { name, description, slug }
   })
+
+  return NextResponse.json({ result: true })
+}
 
 export const getTasksListByOwner = async (ownerId: string) =>
   await prisma.taskList.findMany({
     where: { ownerId },
     include: { Task: true },
     orderBy: {
-      id: "desc"
+      id: "asc"
     }
   })
 
@@ -39,12 +43,17 @@ export const getUniqueTasksListBySlug = async (tasksListSlug: string) =>
     where: { slug: tasksListSlug }
   })
 
-export const createTask = async (
-  title: string,
-  description: string,
-  userId: string,
+export const createTask = async ({
+  title,
+  description,
+  userId,
+  taskListId
+}: {
+  title: string
+  description: string
+  userId: string
   taskListId: string
-) =>
+}) =>
   await prisma.task.create({
     data: {
       title,
@@ -62,4 +71,25 @@ export const deleteTaskByTasksListSlug = async (taskListId: string) =>
 
 export const deleteTasksList = async (tasksListSlug: string) => {
   await prisma.taskList.delete({ where: { slug: tasksListSlug } })
+}
+
+export const createTasksList = async ({
+  name,
+  description,
+  ownerId,
+  slug
+}: {
+  name: string
+  description: string
+  ownerId: string
+  slug: string
+}) => {
+  await prisma.taskList.create({
+    data: {
+      name,
+      description,
+      ownerId,
+      slug
+    }
+  })
 }

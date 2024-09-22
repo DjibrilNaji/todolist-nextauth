@@ -1,11 +1,11 @@
 "use client"
 
+import { SquarePlus } from "lucide-react"
 import Link from "next/link"
 
 import EmptyTasksList from "@/web/components/customs/TasksList/EmptyTasksList"
 import { Error } from "@/web/components/customs/Utils/Error"
 import { Spinner } from "@/web/components/customs/Utils/Spinner"
-import { Button } from "@/web/components/ui/button"
 import { Progress } from "@/web/components/ui/progress"
 import routes from "@/web/routes"
 import { useGetTasksList } from "@/web/service/tasks"
@@ -29,9 +29,9 @@ export function TasksList({ userId }: TasksListProps) {
     <div className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
       <div className="flex items-center justify-between mr-2">
         <h1 className="text-lg font-semibold md:text-2xl">Select your lists</h1>
-        <div>
-          <Button disabled>Add list</Button>
-        </div>
+        <Link href={routes.tasks.createTasksList}>
+          <SquarePlus className="w-8 h-8 cursor-pointer" />
+        </Link>
       </div>
       {data && data.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

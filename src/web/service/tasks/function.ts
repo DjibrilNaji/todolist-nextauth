@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import axios, { AxiosError } from "axios"
 
 import { TaskList } from "@/types/task"
@@ -78,9 +79,9 @@ export const updateTasksListBySlug = async (
   } catch (err: unknown) {
     if (err instanceof AxiosError && err.response?.data) {
       const errorMessage =
-        typeof err.response.statusText === "string"
-          ? err.response.statusText
-          : JSON.stringify(err.response.statusText)
+        typeof err.response.data === "string"
+          ? err.response.data
+          : JSON.stringify(err.response.data)
 
       throw new Error(errorMessage)
     }
@@ -98,6 +99,37 @@ export const createTask = async (
       routes.api.tasks.createTask(tasksListSlug),
       { title, description }
     )
+
+    return data
+  } catch (err: unknown) {
+    if (err instanceof AxiosError && err.response?.data) {
+      const errorMessage =
+        typeof err.response.statusText === "string"
+          ? err.response.statusText
+          : JSON.stringify(err.response.statusText)
+
+      throw new Error(errorMessage)
+    }
+
+    throw new Error("serverError")
+  }
+}
+
+export const createTasksList = async ({
+  name,
+  description,
+  ownerId
+}: {
+  name: string
+  description: string
+  ownerId: string
+}) => {
+  try {
+    const { data }: { data: boolean } = await axios.post(routes.api.tasks.createTasksList, {
+      name,
+      description,
+      ownerId
+    })
 
     return data
   } catch (err: unknown) {

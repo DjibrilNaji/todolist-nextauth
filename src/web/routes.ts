@@ -14,7 +14,8 @@ const routes = {
   },
   tasks: {
     tasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}`,
-    updateTasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}/update`
+    updateTasksList: (tasksListSlug: string) => `/tasksList/${tasksListSlug}/update`,
+    createTasksList: "/tasksList/create"
   },
   api: {
     user: {
@@ -26,7 +27,8 @@ const routes = {
       deleteTask: (taskId: string) => `/api/tasks/${taskId}`,
       updateTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`,
       deleteTasksList: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`,
-      createTask: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`
+      createTask: (tasksListSlug: string) => `/api/tasksList/${tasksListSlug}`,
+      createTasksList: "/api/tasksList"
     }
   }
 }

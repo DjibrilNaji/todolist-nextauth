@@ -32,7 +32,14 @@ export async function PATCH(
   }
 
   try {
-    await updateTasksListBySlug(tasksListSlug, { name, description })
+    const slug = name.toLowerCase().replace(/ /gu, "-")
+    const existingTasksList = await getUniqueTasksListBySlug(slug)
+
+    if (existingTasksList) {
+      return NextResponse.json("Tasks list with this name already exists", { status: 500 })
+    }
+
+    await updateTasksListBySlug(tasksListSlug, { name, description, slug })
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: { message: e.message } }, { status: 500 })
@@ -76,7 +83,7 @@ export async function POST(
       return NextResponse.json({ error: "Task list not found" }, { status: 404 })
     }
 
-    await createTask(title, description, taskList.ownerId, taskList.id)
+    await createTask({ title, description, userId: taskList.ownerId, taskListId: taskList.id })
   } catch (e) {
     if (e instanceof Error) {
       return NextResponse.json({ error: { message: e.message } }, { status: 500 })

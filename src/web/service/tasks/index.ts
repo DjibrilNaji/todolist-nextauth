@@ -2,8 +2,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 
+import routes from "@/web/routes"
 import {
   createTask,
+  createTasksList,
   deleteTaskById,
   deleteTasksListBySlug,
   getTasksList,
@@ -67,7 +69,7 @@ export const useUpdateTasksListBySlug = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
       toast.success("Tasks list updated successfully")
-      router.back()
+      router.push(routes.home)
     }
   })
 
@@ -89,6 +91,29 @@ export const useCreateTask = () => {
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
       toast.success("Task created successfully")
+    }
+  })
+
+  return { mutate, isPending }
+}
+
+export const useCreateTasksList = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({
+      name,
+      description,
+      ownerId
+    }: {
+      name: string
+      description: string
+      ownerId: string
+    }) => await createTasksList({ name, description, ownerId }),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["tasksList"] })
+      toast.success("Tasks list created successfully")
+      router.push(routes.home)
     }
   })
 

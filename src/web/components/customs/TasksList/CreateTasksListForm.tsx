@@ -1,27 +1,23 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { TasksListSchema } from "@/schemas"
 import { TaskListType } from "@/types/formTypes"
-import { TaskList } from "@/types/task"
 import CustomFormField from "@/web/components/customs/Auth/CustomFormField"
 import FormError from "@/web/components/customs/Auth/FormError"
+import { BackButton } from "@/web/components/customs/Utils/BackButton"
 import { Button } from "@/web/components/ui/button"
 import { Form } from "@/web/components/ui/form"
-import { useUpdateTasksListBySlug } from "@/web/service/tasks"
-import { BackButton } from "../Utils/BackButton"
+import { useCreateTasksList } from "@/web/service/tasks"
 
-interface TasksListFormProps {
-  tasksList?: TaskList
+interface CreateTasksListFormProps {
+  userId: string
 }
 
-export default function TasksListForm({ tasksList }: TasksListFormProps) {
+export default function CreateTasksListForm({ userId }: CreateTasksListFormProps) {
   const [error, setError] = useState("")
-  const pathname = usePathname()
-  const [, , tasksListSlug] = pathname.split("/")
   const form = useForm<z.infer<typeof TasksListSchema>>({
     resolver: zodResolver(TasksListSchema),
     defaultValues: {
@@ -29,11 +25,11 @@ export default function TasksListForm({ tasksList }: TasksListFormProps) {
       description: ""
     }
   })
-  const { mutate, isPending } = useUpdateTasksListBySlug()
+  const { mutate, isPending } = useCreateTasksList()
   const handleSubmit = ({ name, description }: TaskListType) => {
     setError("")
     mutate(
-      { tasksListSlug, name, description },
+      { name, description, ownerId: userId },
       {
         onError: (err) => {
           setError(err.message)
@@ -42,24 +38,12 @@ export default function TasksListForm({ tasksList }: TasksListFormProps) {
     )
   }
 
-  useEffect(() => {
-    if (!tasksList) {
-      return
-    }
-
-    form.setValue("name", tasksList.name)
-
-    if (tasksList.description) {
-      form.setValue("description", tasksList.description)
-    }
-  }, [tasksList, form])
-
   return (
     <div className="flex flex-col flex-1 ">
       <BackButton className="m-2" />
       <div className="flex flex-col flex-1 justify-center items-center">
         <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold">Update Tasks List</h1>
+          <h1 className="text-2xl font-bold">Create Tasks List</h1>
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6 w-[400px]">
@@ -83,7 +67,7 @@ export default function TasksListForm({ tasksList }: TasksListFormProps) {
             <FormError message={error} />
 
             <Button type="submit" className="w-full">
-              Update
+              Create
             </Button>
           </form>
         </Form>

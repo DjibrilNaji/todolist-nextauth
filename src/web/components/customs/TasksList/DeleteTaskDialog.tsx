@@ -19,7 +19,6 @@ interface DeleteTaskDialogProps {
 
 export function DeleteTaskDialog({ taskId }: DeleteTaskDialogProps) {
   const { mutate } = useDeleteTaskById()
-
   const handleDeleteTask = () => {
     mutate(taskId)
   }

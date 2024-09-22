@@ -26,7 +26,6 @@ export default function Tasks({ userId }: TasksProps) {
   const [, , tasksListSlug] = pathname.split("/")
   const { data, isPending, error } = useGetTasksListBySlug(userId, tasksListSlug)
   const [title, setTitle] = useState("")
-
   const { mutate } = useCreateTask()
   const handleAddTask = () => {
     mutate({ title, tasksListSlug })
@@ -59,7 +58,9 @@ export default function Tasks({ userId }: TasksProps) {
         <Input
           placeholder="Add a new task"
           className="rounded-xl"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value)
+          }}
           value={title}
         />
         <Button onClick={handleAddTask} disabled={!title}>
@@ -70,7 +71,7 @@ export default function Tasks({ userId }: TasksProps) {
       {data?.Task && data.Task.length > 0 ? (
         <div className="flex flex-col gap-4">
           {data.Task.map((task, index) => (
-            <div className="flex items-center gap-4 mr-2">
+            <div className="flex items-center gap-4 mr-2" key={index}>
               <TaskItem key={index} task={task} />
               <DeleteTaskDialog taskId={task.id} />
             </div>
